@@ -1,0 +1,42 @@
+/* Header.module.css */
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #b3e5fc; /* 옅은 하늘색 */
+    padding: 0 20px;
+    height: 10vh; /* 헤더 높이 */
+}
+
+.Logo img {
+    height: 80%; /* 로고 이미지 높이 수정 */
+}
+
+.Navigation {
+    display: flex;
+    height: 100%; /* 네비게이션 높이 수정 */
+}
+
+.NavLink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 0 15px; /* 좌우 패딩만 유지 */
+    border-radius: 5px;
+    height: 100%; /* 링크 높이 수정 */
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    margin-left: 0; /* 좌측 마진 제거 */
+}
+
+.NavLink:not(:last-child) {
+    margin-right: 0; /* 우측 마진 제거 */
+}
+
+.NavLink:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    color: #000;
+}
