@@ -1,0 +1,13 @@
+/* MainPage.module.css */
+.mainContainer {
+    margin-top: 20px; /* 헤더와의 간격 */
+    margin-bottom: 20px; /* 푸터와의 간격 */
+}
+
+.calContainer {
+    width: 60vw;
+    height: 50vh;
+    margin: auto;
+    position: relative;
+}
+

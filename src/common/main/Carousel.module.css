@@ -1,0 +1,17 @@
+/* Carousel.module.css */
+.carouselSlide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* 캐러셀 높이에 맞춤 */
+}
+
+.carouselImage {
+    max-width: 100%; /* 캐러셀 너비를 넘지 않도록 설정 */
+    max-height: 100%; /* 캐러셀 높이를 넘지 않도록 설정 */
+    object-fit: contain; /* 이미지 비율을 유지 */
+}
+
+.carouselContainer *:focus {
+    outline: none;
+}
