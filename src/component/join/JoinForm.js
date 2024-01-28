@@ -34,19 +34,40 @@ const JoinForm = () => {
       });
     
     };
-
+    function duplicatedCheck(event){
+      let type = event.target.getAttribute('data-type'); 
+      let inputElement;
+      let url; 
+      if (type === 'email') {
+        inputElement = document.getElementById('memberEmail').value;
+        url = `http://${serverIp}:${serverPort}/emailDuplicatedCheck?value=${inputElement}`;
+      } else if (type === 'nickname') {
+        inputElement = document.getElementById('nickname').value;
+        url = `http://${serverIp}:${serverPort}/nicknameDuplicatedCheck?value=${inputElement}`;
+      }
+      axios.get(url)
+      .then(response => {
+      })
+      .catch(error => {
+        console.error('Error fetching data: ', error);
+      })
+      .finally(() => {
+      });
+    
+    }
+    
     return (
         <div className={styles.joinContainer}>
            <div className={styles.joinFormContainer}>
               <form onSubmit={sendData}>
               <div className={styles.joinInputDiv}>
-              <span>이메일</span><input type='email' maxLength={50} required onChange={changeValue} name='memberEmail'></input>
-              <button type='button'>중복확인</button>
+              <span>이메일</span><input type='email' maxLength={50} required onChange={changeValue} name='memberEmail' id='memberEmail'></input>
+              <button type='button' onClick={duplicatedCheck} data-type='email'>중복확인</button>
               </div>
               <div className={styles.joinInputDiv}>
                 <span>닉네임</span>
-                <input type='text' maxLength={15} required onChange={changeValue} name='nickname'></input>
-                <button type='button'>중복확인</button>
+                <input type='text' maxLength={15} required onChange={changeValue} name='nickname' id='nickname'></input>
+                <button type='button' onClick={duplicatedCheck} data-type='nickname'>중복확인</button>
               </div>
               <div className={styles.joinInputDiv}>
                 <span>이름</span>
