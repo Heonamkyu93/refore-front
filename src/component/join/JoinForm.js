@@ -99,8 +99,10 @@ const JoinForm = () => {
         }
         url = `http://${serverIp}:${serverPort}/nicknameDuplicatedCheck?value=${inputElement}`;
       }else if(type === 'phoneNumber'){
-        inputElement = document.getElementById('nickname').value;
+       
+        inputElement = document.getElementById('phoneNumber').value;
         if (inputElement.length < 10 || inputElement.length > 11) {  // 10미만 11초과
+          console.log(inputElement);
           alert('전화번호는 10자리 이상 11자리 이하여야 합니다.');
           return;
         }
@@ -108,9 +110,16 @@ const JoinForm = () => {
       }
       axios.get(url)
       .then(response => {
+        if(response.data.type==='email'){
+          setIsEmailChecked(true);
+        }else if(response.data.type==='phoneNumber'){
+          setIsPhoneChecked(true);
+        }else if(response.data.type==='nickname'){
+          setIsNicknameChecked(true);
+        }
       })
       .catch(error => {
-        console.error('Error fetching data: ', error);
+        alert(error.response.data);
       })
       .finally(() => {
       });
@@ -127,7 +136,7 @@ const JoinForm = () => {
               </div>
               <div className={styles.joinInputDiv}>
                 <span>전화번호</span>
-                <input type='text' maxLength={11} required onChange={changeValue} name='phoneNumber'></input>
+                <input type='text' maxLength={11} required onChange={changeValue} name='phoneNumber' id='phoneNumber'></input>
                 <button type='button' onClick={duplicatedCheck} data-type='phoneNumber'>중복확인</button>
               </div>
               <div className={styles.joinInputDiv}>
