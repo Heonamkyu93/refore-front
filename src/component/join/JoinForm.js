@@ -68,8 +68,9 @@ const JoinForm = () => {
       }
 
 
-      axios.post(`http://${serverIp}:${serverPort}/join`,formData)
+      axios.post(`http://${serverIp}:${serverPort}/out/join`,formData)
       .then(response => {
+        alert('회원가입');
       })
       .catch(error => {
         console.error('Error fetching data: ', error);
@@ -86,7 +87,7 @@ const JoinForm = () => {
        let confirmEmail=document.getElementById('memberEmail');
        if (confirmEmail.validity.valid) {
         inputElement = document.getElementById('memberEmail').value;
-        url = `http://${serverIp}:${serverPort}/emailDuplicatedCheck?value=${inputElement}`;
+        url = `http://${serverIp}:${serverPort}/out/emailDuplicatedCheck?value=${inputElement}`;
        }else{
         alert('유효하지 않은 이메일 형식입니다.');
         return;
@@ -97,7 +98,7 @@ const JoinForm = () => {
           alert('닉네임은 2자리 이상 20자리 이하여야 합니다.');
           return;
         }
-        url = `http://${serverIp}:${serverPort}/nicknameDuplicatedCheck?value=${inputElement}`;
+        url = `http://${serverIp}:${serverPort}/out/nicknameDuplicatedCheck?value=${inputElement}`;
       }else if(type === 'phoneNumber'){
        
         inputElement = document.getElementById('phoneNumber').value;
@@ -106,16 +107,19 @@ const JoinForm = () => {
           alert('전화번호는 10자리 이상 11자리 이하여야 합니다.');
           return;
         }
-        url = `http://${serverIp}:${serverPort}/phoneNumberDuplicatedCheck?value=${inputElement}`;
+        url = `http://${serverIp}:${serverPort}/out/phoneNumberDuplicatedCheck?value=${inputElement}`;
       }
       axios.get(url)
       .then(response => {
         if(response.data.type==='email'){
           setIsEmailChecked(true);
+          alert('사용가능 합니다.');
         }else if(response.data.type==='phoneNumber'){
           setIsPhoneChecked(true);
+          alert('사용가능 합니다.');
         }else if(response.data.type==='nickname'){
           setIsNicknameChecked(true);
+          alert('사용가능 합니다.');
         }
       })
       .catch(error => {

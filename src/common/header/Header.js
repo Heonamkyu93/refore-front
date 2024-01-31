@@ -10,7 +10,7 @@ const Header = () => {
             </Link>
             <nav className={styles.Navigation}>
                 <Link to="/join" className={styles.NavLink}>링크 1</Link>
-                <Link to="/link2" className={styles.NavLink}>링크 2</Link>
+                <Link to="/login" className={styles.NavLink}>링크 2</Link>
                 <Link to="/link3" className={styles.NavLink}>링크 3</Link>
                 <Link to="/link4" className={styles.NavLink}>링크 4</Link>
             </nav>

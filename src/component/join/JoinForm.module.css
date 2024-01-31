@@ -1,0 +1,87 @@
+.joinFormContainer {
+    margin-top: 5vh;
+    width: 300px; /* 기본 너비 설정 */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 5vh;
+    background-color: #f9f9f9; /* 배경색 추가 */
+  }
+  
+  .joinInputDiv {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .joinInputDiv span {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .joinInputDiv input[type='email'],
+  .joinInputDiv input[type='text'],
+  .joinInputDiv input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #5d91f1;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .joinInputDiv input[type='email']:focus,
+  .joinInputDiv input[type='text']:focus,
+  .joinInputDiv input[type='password']:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+    border-color: #87CEEB;
+  }
+  
+  .joinInputDiv button {
+    padding: 7px 15px;
+    background-color: #3674EA;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .joinInputDiv button:hover {
+    background-color: #4682B4;
+  }
+  
+  .joinInputDiv input[type='submit'] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50; /* 회원가입 버튼 색상 변경 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .joinInputDiv input[type='submit']:hover {
+    background-color: #45a049;
+  }
+  
+  @media (max-width: 768px) {
+    .joinFormContainer {
+      width: 60%;
+      margin-top: 10vh;
+      margin-bottom: 10vh;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .joinFormContainer {
+      width: 90%;
+      margin-top: 10vh;
+      margin-bottom: 10vh;
+    }
+  }
+  
