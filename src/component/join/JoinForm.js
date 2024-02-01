@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import styles from './JoinForm.module.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const serverIp = process.env.REACT_APP_SPRING_BOOT_IP;
 const serverPort = process.env.REACT_APP_SPRING_BOOT_PORT;
 
@@ -9,7 +10,7 @@ const JoinForm = () => {
   const [isEmailChecked, setIsEmailChecked] = useState(false);
   const [isPhoneChecked, setIsPhoneChecked] = useState(false);
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
-
+  const navigate = useNavigate();
 
   const [formData,setFormData] = useState({
     memberEmail:"",
@@ -70,7 +71,8 @@ const JoinForm = () => {
 
       axios.post(`http://${serverIp}:${serverPort}/out/join`,formData)
       .then(response => {
-        alert('회원가입');
+          alert(response.data);
+          navigate("/login");
       })
       .catch(error => {
         console.error('Error fetching data: ', error);

@@ -1,18 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styles from './Header.module.css'; // CSS 모듈 임포트
-
+import { Link,NavLink } from 'react-router-dom';
+import styles from './Header.module.css';
+import { useState,React } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Header = () => {
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        /* sessionStorage.removeItem('userInfo');
+        sessionStorage.removeItem('jwt');
+        sessionStorage.removeItem('refreshToken'); */
+    }
+
+
     return (
         <header className={styles.Header}>
-            <Link to="/" className={styles.Logo}>
+            <NavLink to="/" className={styles.Logo}>
                 <img  src="/img/react.png" alt="Logo" />
-            </Link>
+            </NavLink>
             <nav className={styles.Navigation}>
-                <Link to="/join" className={styles.NavLink}>링크 1</Link>
-                <Link to="/login" className={styles.NavLink}>링크 2</Link>
-                <Link to="/link3" className={styles.NavLink}>링크 3</Link>
-                <Link to="/link4" className={styles.NavLink}>링크 4</Link>
+                {userInfo ? (<>
+                   
+                     <NavLink to="/link4" className={styles.NavLink}>마이페이지</NavLink>
+                     <NavLink  onClick={handleLogout} className={styles.NavLink}>로그아웃</NavLink>
+                </>):(<>
+                
+                    <NavLink to="/join" className={styles.NavLink}>회원가입</NavLink>
+                    <NavLink to="/login" className={styles.NavLink}>로그인</NavLink>
+                
+                </>)}
+              
+            
+               
             </nav>
         </header>
     );

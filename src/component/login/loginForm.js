@@ -9,7 +9,7 @@ const LoginForm = () => {
     const [loginData, setLoginData] = useState({
       memberEmail: '',
       memberPassword: ''
-    });
+    }); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,18 +29,19 @@ const LoginForm = () => {
               'Content-Type': 'application/json',
           }
       }).then(response => {
+        const authToken = response.headers.get('Authorization');
+        const refreshToken = response.headers.get('Refresh-Token');
+
+    if (authToken && refreshToken) {
+        sessionStorage.setItem('jwt', authToken);
+        sessionStorage.setItem('userInfo', JSON.stringify(response.data));
+        sessionStorage.setItem('refreshToken', refreshToken);
+        navigate("/");
+    } else {
+        console.error('토큰이 응답에 없습니다.');
+    }
       })
             .catch(error => {
-                if (error.response && error.response.status === 401) {
-                  // JWT가 만료된 경우, 리프레시 토큰으로 새 JWT 요청
-                  axios.get(`http://${serverIp}:${serverPort}/refresh-token`)
-                    .then(response => {
-                      
-                    })
-                    .catch(refreshError => {
-                      // 리프레시 토큰도 만료되었거나 문제가 있는 경우 처리
-                    });
-                }
               })
             .finally(() => {
             });
