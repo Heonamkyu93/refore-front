@@ -4,6 +4,8 @@ import Main from './common/main/Main';
 import Layout from './common/layout/Layout';
 import JoinForm from './component/join/JoinForm';
 import LoginForm from './component/login/loginForm';
+import MyPage from './component/mypage/MyPage';
+import { ProtectedRoute } from './common/route/ProtectedRoute';
 function App() {
   return (
   <>
@@ -13,7 +15,15 @@ function App() {
     <Route index element={<Main/>} />
     <Route path="/join" element={<JoinForm/>}/>
     <Route path="/login" element={<LoginForm/>}/>
+    
+    <Route path='/mypage/*' element={
+      <ProtectedRoute>
+        <MyPage />
+        </ProtectedRoute>
+    }/>
     </Route>
+
+    
     </Routes>
     </BrowserRouter>
   </>

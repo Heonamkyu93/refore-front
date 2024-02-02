@@ -6,9 +6,9 @@ const Header = () => {
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const navigate = useNavigate();
     const handleLogout = () => {
-        /* sessionStorage.removeItem('userInfo');
+        sessionStorage.removeItem('userInfo');
         sessionStorage.removeItem('jwt');
-        sessionStorage.removeItem('refreshToken'); */
+        sessionStorage.removeItem('refreshToken');
     }
 
 
@@ -20,7 +20,7 @@ const Header = () => {
             <nav className={styles.Navigation}>
                 {userInfo ? (<>
                    
-                     <NavLink to="/link4" className={styles.NavLink}>마이페이지</NavLink>
+                     <NavLink to="/mypage" className={styles.NavLink}>마이페이지</NavLink>
                      <NavLink  onClick={handleLogout} className={styles.NavLink}>로그아웃</NavLink>
                 </>):(<>
                 
