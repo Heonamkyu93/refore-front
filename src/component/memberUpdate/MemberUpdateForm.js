@@ -6,11 +6,29 @@ import axiosInstance from '../../common/interceptor/interceptorAxios';
 const serverIp = process.env.REACT_APP_SPRING_BOOT_IP;
 const serverPort = process.env.REACT_APP_SPRING_BOOT_PORT;
 const MemberUpdateForm = () => {
+  const [isPhoneChecked, setIsPhoneChecked] = useState(false);
+  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  const navigate = useNavigate();
 
+  const [formData,setFormData] = useState({
+    memberEmail:"",
+    memberName:"",
+    nickname:"",
+    phoneNumber:"",
+  });
     useEffect(() => {
         axiosInstance.get('/in/info')
       .then(response=>{
-            console.log(response.data);
+        const data = response.data;
+        console.log(`데이터=${data}`);
+            setFormData({
+              memberEmail:data.memberEmail,
+              memberName:data.memberName,
+              nickname:data.nickname,
+              phoneNumber:data.phoneNumber,
+
+            });
+            console.log(formData);
       }).catch(error=>{
 
       }).finally(()=>{
@@ -20,25 +38,11 @@ const MemberUpdateForm = () => {
     },[]);
 
 
-    const [isEmailChecked, setIsEmailChecked] = useState(false);
-    const [isPhoneChecked, setIsPhoneChecked] = useState(false);
-    const [isNicknameChecked, setIsNicknameChecked] = useState(false);
-    const navigate = useNavigate();
-  
-    const [formData,setFormData] = useState({
-      memberEmail:"",
-      memberPassword:"",
-      memberName:"",
-      nickname:"",
-      phoneNumber:"",
-      confirmPassword:"",
-    });
+    
     
       const changeValue =(e) =>{
         const inputId=e.target.id;
-        if(inputId==='memberEmail'){
-        setIsEmailChecked(false);
-        }else if(inputId==='phoneNumber'){
+       if(inputId==='phoneNumber'){
           setIsPhoneChecked(false);
         }else if(inputId==='nickname'){
           setIsNicknameChecked(false);
@@ -52,28 +56,17 @@ const MemberUpdateForm = () => {
       const sendData = (e) => {
         e.preventDefault();
         let inputName=document.getElementById('memberName').value;
-        let inputPwd=document.getElementById('memberPassword').value;
-        let inputConfirmPwd=document.getElementById('confirmPassword').value;
   
   
         if(inputName.length<2 || inputName > 10){
           alert('이름은 2자리 이상 10자리 이하여야 합니다.');
-          return;
-        }else if(inputPwd.length <10 || inputPwd >30){
-          alert('비밀번호는 10자리 이상 30자리 이하여야 합니다.');
-          return;
-        }else if(!inputPwd===inputConfirmPwd){
-          alert('비밀번호와 비밀번호 확인은 값이 같아야 합니다.');
           return;
         }
   
   
   
   
-        if (!isEmailChecked) {
-          alert('이메일 중복 확인을 해주세요.');
-          return;
-        }else if(!isPhoneChecked){
+       if(!isPhoneChecked){
           alert('전화번호 중복 확인을 해주세요.');
           return;
         }else if (!isNicknameChecked){
@@ -126,10 +119,7 @@ const MemberUpdateForm = () => {
         }
         axios.get(url)
         .then(response => {
-          if(response.data.type==='email'){
-            setIsEmailChecked(true);
-            alert('사용가능 합니다.');
-          }else if(response.data.type==='phoneNumber'){
+           if(response.data.type==='phoneNumber'){
             setIsPhoneChecked(true);
             alert('사용가능 합니다.');
           }else if(response.data.type==='nickname'){
@@ -150,34 +140,25 @@ const MemberUpdateForm = () => {
              <div className={styles.joinFormContainer}>
                 <form onSubmit={sendData}>
                 <div className={styles.joinInputDiv}>
-                <span>이메일</span><input type='email' maxLength={50} required onChange={changeValue} name='memberEmail' id='memberEmail'></input>
-                <button type='button' onClick={duplicatedCheck} data-type='email'>중복확인</button>
+                <span>이메일</span><input type='email' maxLength={50} required onChange={changeValue} name='memberEmail' id='memberEmail' readOnly value={formData.memberEmail}></input>
                 </div>
                 <div className={styles.joinInputDiv}>
                   <span>전화번호</span>
-                  <input type='text' maxLength={11} required onChange={changeValue} name='phoneNumber' id='phoneNumber'></input>
+                  <input type='text' maxLength={11} required onChange={changeValue} name='phoneNumber' id='phoneNumber' value={formData.phoneNumber}></input>
                   <button type='button' onClick={duplicatedCheck} data-type='phoneNumber'>중복확인</button>
                 </div>
                 <div className={styles.joinInputDiv}>
                   <span>닉네임</span>
-                  <input type='text' maxLength={15} required onChange={changeValue} name='nickname' id='nickname'></input>
+                  <input type='text' maxLength={15} required onChange={changeValue} name='nickname' id='nickname' value={formData.nickname}></input>
                   <button type='button' onClick={duplicatedCheck} data-type='nickname'>중복확인</button>
                 </div>
                 <div className={styles.joinInputDiv}>
                   <span>이름</span>
-                  <input type='text' maxLength={10} required onChange={changeValue} name='memberName' id='memberName' ></input>
-                </div>
-                <div className={styles.joinInputDiv}>
-                  <span>비밀번호</span>
-                  <input type='password' maxLength={10} required onChange={changeValue} name='memberPassword' id='memberPassword'></input>
-                </div>
-                <div className={styles.joinInputDiv}>
-                  <span>비밀번호 확인</span>
-                  <input type='password' maxLength={10} required onChange={changeValue} name='confirmPassword' id='confirmPassword'></input>
+                  <input type='text' maxLength={10} required onChange={changeValue} name='memberName' id='memberName'value={formData.memberName} ></input>
                 </div>
                
                 <div className={styles.joinInputDiv}>
-                <input type="submit" value="회원가입" ></input>
+                <input type="submit" value="정보수정" ></input>
                 </div>
                 </form>
              </div>

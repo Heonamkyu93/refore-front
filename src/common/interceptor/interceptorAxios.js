@@ -28,15 +28,17 @@ axiosInstance.interceptors.response.use((response) => {
   return response;
 }, async function (error) {
   const originalRequest = error.config;
-  if (error.response.status === 401 && !originalRequest._retry) {
+  if (error.response.status === 403 && !originalRequest._retry) {
     originalRequest._retry = true;
     const refreshToken = sessionStorage.getItem('refreshToken');
-    return axiosInstance.post('/refresh-token',  { refreshToken: `Bearer ${refreshToken}` })
+    return axiosInstance.post('/refresh-token', {}, { // 요청 본문은 비워두고
+      headers: { "Refresh-Token": `Bearer ${refreshToken}` } // 리프레쉬 토큰을 헤더에 추가
+    })
       .then(res => {
         if (res.status === 200) {
-          // 새 토큰 저장
-          sessionStorage.setItem('jwt', res.data.jwt);
-          // 새 토큰으로 원래 요청 재시도
+          const authToken = res.headers.get('Authorization');
+          sessionStorage.setItem('jwt', authToken);
+          
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.jwt;
           return axiosInstance(originalRequest);
         }
