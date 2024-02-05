@@ -6,11 +6,17 @@ import axiosInstance from '../../common/interceptor/interceptorAxios';
 const serverIp = process.env.REACT_APP_SPRING_BOOT_IP;
 const serverPort = process.env.REACT_APP_SPRING_BOOT_PORT;
 const MemberUpdateForm = () => {
-  const [isPhoneChecked, setIsPhoneChecked] = useState(false);
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  const [isPhoneChecked, setIsPhoneChecked] = useState(true);
+  const [isNicknameChecked, setIsNicknameChecked] = useState(true);
+  const id=JSON.parse(sessionStorage.getItem('userInfo'));
   const navigate = useNavigate();
-
+  const [original,setOriginal] = useState({
+    memberName:"",
+    nickname:"",
+    phoneNumber:"",
+  });
   const [formData,setFormData] = useState({
+    memberId:null,
     memberEmail:"",
     memberName:"",
     nickname:"",
@@ -22,15 +28,20 @@ const MemberUpdateForm = () => {
         const data = response.data;
         console.log(`데이터=${data}`);
             setFormData({
+              memberId:id.memberId,
               memberEmail:data.memberEmail,
               memberName:data.memberName,
               nickname:data.nickname,
               phoneNumber:data.phoneNumber,
 
             });
-            console.log(formData);
+            setOriginal({
+              memberName: data.memberName,
+              nickname: data.nickname,
+              phoneNumber: data.phoneNumber,
+            });
       }).catch(error=>{
-
+        
       }).finally(()=>{
 
       });
@@ -41,6 +52,7 @@ const MemberUpdateForm = () => {
     
     
       const changeValue =(e) =>{
+        console.log(original);
         const inputId=e.target.id;
        if(inputId==='phoneNumber'){
           setIsPhoneChecked(false);
@@ -56,8 +68,7 @@ const MemberUpdateForm = () => {
       const sendData = (e) => {
         e.preventDefault();
         let inputName=document.getElementById('memberName').value;
-  
-  
+        console.log(formData);
         if(inputName.length<2 || inputName > 10){
           alert('이름은 2자리 이상 10자리 이하여야 합니다.');
           return;
@@ -75,35 +86,46 @@ const MemberUpdateForm = () => {
         }
   
   
-        axios.post(`http://${serverIp}:${serverPort}/out/join`,formData)
+        axiosInstance.put('/in/infoUpdate', formData, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
         .then(response => {
             alert(response.data);
-            navigate("/login");
         })
         .catch(error => {
           console.error('Error fetching data: ', error);
+          const errors = error.response.data;
+          let errorMessage = "정보수정 불가:\n";
+          Object.entries(errors).forEach(([field, message]) => {
+            errorMessage += `${message}\n`;
+          });
+          alert(errorMessage);
         })
         .finally(() => {
         });
       
       };
+
+
+
+
+
       function duplicatedCheck(event){
         let type = event.target.getAttribute('data-type'); 
         let inputElement;
         let url; 
-        if (type === 'email') {
-         let confirmEmail=document.getElementById('memberEmail');
-         if (confirmEmail.validity.valid) {
-          inputElement = document.getElementById('memberEmail').value;
-          url = `http://${serverIp}:${serverPort}/out/emailDuplicatedCheck?value=${inputElement}`;
-         }else{
-          alert('유효하지 않은 이메일 형식입니다.');
-          return;
-         }
-        } else if (type === 'nickname') {
+       
+       
+       
+        if (type === 'nickname') {
           inputElement = document.getElementById('nickname').value;
           if (inputElement.length < 2 || inputElement.length > 20) {  // 2미만 20초과
             alert('닉네임은 2자리 이상 20자리 이하여야 합니다.');
+            return;
+          }else if (inputElement === original.nickname){
+            alert('기존 닉네임 입니다.');
             return;
           }
           url = `http://${serverIp}:${serverPort}/out/nicknameDuplicatedCheck?value=${inputElement}`;
@@ -113,6 +135,9 @@ const MemberUpdateForm = () => {
           if (inputElement.length < 10 || inputElement.length > 11) {  // 10미만 11초과
             console.log(inputElement);
             alert('전화번호는 10자리 이상 11자리 이하여야 합니다.');
+            return;
+          }else if(inputElement===original.phoneNumber){
+            alert('기존 전화번호 입니다.');
             return;
           }
           url = `http://${serverIp}:${serverPort}/out/phoneNumberDuplicatedCheck?value=${inputElement}`;
