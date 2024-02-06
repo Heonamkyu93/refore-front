@@ -33,7 +33,11 @@ const Withdrawal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
-      console.log(formData);
+      let passwordValue =document.getElementById('memberPassword').value;
+    if(passwordValue.length <10 || passwordValue.length>30){
+      alert("비밀번호는 10자리 이상 30자리 이하입니다.");
+      return;
+    }
       axiosInstance.post('/in/passwordConfirm',formData, {
         headers: {
           'Content-Type': 'application/json'

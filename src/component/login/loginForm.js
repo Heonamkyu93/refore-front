@@ -42,6 +42,8 @@ const LoginForm = () => {
     }
       })
             .catch(error => {
+              console.log(error);
+              alert(error.response.data);
               })
             .finally(() => {
             });
