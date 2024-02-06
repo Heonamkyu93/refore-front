@@ -4,6 +4,7 @@ import { ProtectedRoute } from '../../common/route/ProtectedRoute';
 import MemberUpdateForm from '../memberUpdate/MemberUpdateForm';
 import styles from './MyPage.module.css';
 import Withdrawal from '../withdrawal/Withdrawal';
+import ChangePwd from '../changePwd/ChangePwd';
 const MyPage = () => {
     return (
     <>
@@ -36,6 +37,7 @@ const MyPage = () => {
 
     <Route path='memberUpdate' element={<MemberUpdateForm/>} />
     <Route path='withdrawal' element={<Withdrawal/>} />
+    <Route path='passwordChange' element={<ChangePwd/>} />
 
         
         </Routes>
