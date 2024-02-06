@@ -59,28 +59,33 @@ const ChangePwd = () => {
       setNewData(prevData => ({
         ...prevData,
         confirmPwd: value
-      }));
+      })
+      
+      );
     }
   };
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(newData.confirmPwd!==newData.password){
+    console.log(newData.confirmPwd);
+    console.log(newData.memberPassword);
+    if(newData.confirmPwd!==newData.memberPassword){
       alert('비밀번호와 비밀번호확인은 같은 값이어야 합니다.');
       return;
-    }else if(newData.password.length < 10 || newData.password.length > 25 ||
-      newData.confirmPwd.length < 10 || newData.confirmPwd.length > 25){
-  alert('비밀번호는 10자리이상 25자리 이하여야 합니다.');
+    }else if(newData.memberPassword.length < 10 || newData.memberPassword.length > 30 ||
+      newData.confirmPwd.length < 10 || newData.confirmPwd.length > 30){
+  alert('비밀번호는 10자리이상 30자리 이하여야 합니다.');
   return;
 }
 
-    axios.put(`http://${serverIp}:${serverPort}/api/in/member/changePwd`, newData,{ withCredentials: true })
-    .then(response => {
-      if (response.data === true) {
-         navigate('/');
-      } else {
-        alert('비밀번호 변경 실패 ');
+    axiosInstance.put('/in/passwordChange',newData, {
+      headers: {
+        'Content-Type': 'application/json'
       }
+    })
+    .then(response => {
+      alert(response.data);
+     console.log(response.data);
     })
     .catch(error => {
       console.error('Error fetching data: ', error);
