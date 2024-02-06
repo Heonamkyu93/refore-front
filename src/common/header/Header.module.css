@@ -40,3 +40,35 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
     color: #000;
 }
+.NavLink, .NavLink button {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 0 15px; /* 좌우 패딩만 유지 */
+    border-radius: 5px;
+    height: 100%; /* 링크 높이 수정 */
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    margin-left: 0; /* 좌측 마진 제거 */
+    border: none; /* 버튼 테두리 제거 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+}
+
+.NavLink:not(:last-child), .NavLink:not(:last-child) button {
+    margin-right: 0; /* 우측 마진 제거 */
+}
+
+.NavLink:hover, .NavLink:hover button {
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    color: #000;
+}
+
+/* 버튼에 특정한 스타일을 적용할 경우 */
+.NavLink button {
+    background: none; /* 배경색 제거 */
+    outline: none; /* 포커스 시 외곽선 제거 */
+}
