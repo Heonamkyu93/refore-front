@@ -3,6 +3,7 @@ import {  Route, Routes,NavLink } from "react-router-dom";
 import { ProtectedRoute } from '../../common/route/ProtectedRoute';
 import MemberUpdateForm from '../memberUpdate/MemberUpdateForm';
 import styles from './MyPage.module.css';
+import Withdrawal from '../withdrawal/Withdrawal';
 const MyPage = () => {
     return (
     <>
@@ -30,11 +31,11 @@ const MyPage = () => {
         </NavLink>
         </div>
     <Routes>
-    <Route index element={<ProtectedRoute> 
+    <Route index element={<ProtectedRoute> <MemberUpdateForm/>
     </ProtectedRoute>}/>
 
     <Route path='memberUpdate' element={<MemberUpdateForm/>} />
-
+    <Route path='withdrawal' element={<Withdrawal/>} />
 
         
         </Routes>

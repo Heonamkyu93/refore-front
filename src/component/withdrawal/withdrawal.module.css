@@ -66,3 +66,20 @@
     text-decoration: underline;
     color: #4682B4;
   }
+.WithdrawalBtn {
+  display: block; /* 블록 레벨 요소로 만들어 너비 조정이 가능하게 함 */
+  width: 80%; /* 컨테이너 대비 버튼의 너비를 80%로 설정 */
+  margin: 10px auto; /* 위아래 마진 10px, 좌우 마진은 자동으로 설정하여 중앙 정렬 */
+  padding: 10px 0; /* 상하 패딩 10px, 좌우 패딩은 0으로 설정 */
+  font-size: 16px; /* 글자 크기 설정 */
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  background-color: #D9534F; /* 경고성 짙은 빨간색 배경 */
+  color: #fff; /* 흰색 글자 */
+}
+
+.WithdrawalBtn:hover {
+  background-color: #C9302C; /* 호버 시 배경색 변경 */
+}

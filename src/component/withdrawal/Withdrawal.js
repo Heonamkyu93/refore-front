@@ -2,14 +2,18 @@ import React , { useEffect, useState }from 'react';
 import styles from './withdrawal.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../common/interceptor/interceptorAxios'; 
+import ConfirmUser from './ConfirmUser';
+import WithdrawalBtn from './WithdrawalBtn';
 const serverIp = process.env.REACT_APP_SPRING_BOOT_IP;
 const serverPort = process.env.REACT_APP_SPRING_BOOT_PORT;
 const Withdrawal = () => {
   const navigate = useNavigate();
+  const [isClear,setIsClear] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    id: "",
+    memberEmail: "",
+    memberPassword: "",
+    memberId: "",
   });
   
   
@@ -19,8 +23,8 @@ const Withdrawal = () => {
       const data = JSON.parse(user); 
       console.log(data);
       setFormData({
-        email: data.email,
-        id:data.id,
+        memberEmail: data.memberEmail,
+        memberId:data.memberId,
       });
     };
 
@@ -29,21 +33,20 @@ const Withdrawal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
-    const isConfirmed = window.confirm("정말로 탈퇴하시겠습니까?");
-  
-    if (isConfirmed) {
-  
-      axios.delete(`http://${serverIp}:${serverPort}/in/member/withdrawal`, { data: formData },{ withCredentials: true })
+      console.log(formData);
+      axiosInstance.post('/in/passwordConfirm',formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then(response => {
-        sessionStorage.setItem('isLoggedIn', 'false');
-        sessionStorage.removeItem('userInfo');
-        alert('탈퇴 처리 되었습니다.');
-        navigate('/');
+        alert(response.data);
+        setIsClear(true);
       })
       .catch(error => {
         console.error('Error fetching data: ', error);
+        alert(error.response.data);
       });
-    }
   };
 
   const handleChange = (e) => {
@@ -56,20 +59,8 @@ const Withdrawal = () => {
 
         <div className={styles.findFormContainer}>
   <h2>회원탈퇴</h2>
-          <div></div>
-          <label htmlFor="password" className={styles.labelEmail}>본인확인</label>
-          <div className={styles.inputWithButton}>
-          <input
-    type="password"
-    id="password"
-    name="password"
-    className={styles.findInput}
-    placeholder='비밀번호를 입력하세요'
-    onChange={handleChange}
-  />
-  <button className={styles.findBtn} onClick={handleSubmit}>탈퇴</button>
-          </div>
-          <div></div>
+      {!isClear && <ConfirmUser handleChange={handleChange} handleSubmit={handleSubmit} formData={formData} />}
+      {isClear && <WithdrawalBtn formData={formData} />}
 </div>
     );
 };
