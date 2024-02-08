@@ -6,6 +6,7 @@ import JoinForm from './component/join/JoinForm';
 import LoginForm from './component/login/loginForm';
 import MyPage from './component/mypage/MyPage';
 import { ProtectedRoute } from './common/route/ProtectedRoute';
+import Upimg from './component/upimg/Upimg';
 function App() {
   return (
   <>
@@ -21,6 +22,15 @@ function App() {
         <MyPage />
         </ProtectedRoute>
     }/>
+
+
+<Route path='/upimg' element={
+        <Upimg/>
+    }/>
+
+
+
+
     </Route>
 
     

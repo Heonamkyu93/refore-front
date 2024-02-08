@@ -16,7 +16,7 @@ const hasRole = (requiredRoles) => {
 
 export const ProtectedRoute = ({ children, roles }) => { 
   if (!isAuthenticated()) {
-    return <Navigate to="/loginForm" />;
+    return <Navigate to="/login" />;
   }
 
   if (roles && !hasRole(roles)) { 

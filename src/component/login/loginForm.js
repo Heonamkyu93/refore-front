@@ -65,7 +65,7 @@ const LoginForm = () => {
           <button type="submit" className={styles.loginBtn}>로그인</button>
         <div className={styles.links}>
         <Link to="/findForm">ID/PW찾기</Link>
-          <Link to="/joinForm">회원가입</Link>
+          <Link to="/join">회원가입</Link>
         </div>
       </div>
         </form>

@@ -24,11 +24,13 @@ const Header = () => {
                     <>
                         <Link to="/mypage" className={styles.NavLink}>마이페이지</Link>
                         <button onClick={handleLogout} className={styles.NavLink}>로그아웃</button>
+                        
                     </>
                 ) : (
                     <>
                         <Link to="/join" className={styles.NavLink}>회원가입</Link>
                         <Link to="/login" className={styles.NavLink}>로그인</Link>
+                        <Link to="/upimg" className={styles.NavLink}>이미지</Link>
                     </>
                 )}
             </nav>
