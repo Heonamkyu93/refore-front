@@ -34,7 +34,7 @@
 }
 
 .imagePreview {
-    max-height: 30vh; /* 화면 높이의 30% */
+    max-height: 50vh; /* 화면 높이의 30% */
     max-width: 40vw; /* 화면 너비의 40% */
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
