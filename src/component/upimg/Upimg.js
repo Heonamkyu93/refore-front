@@ -51,7 +51,8 @@ const Upimg = () => {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                console.log('서버 응답:', response.data);
+                console.log('서버 응답:', response.data.predictions[1]);
+                alert(response.data.predictions[0]);
             } catch (error) {
                 console.log(error.response.data)
             }
