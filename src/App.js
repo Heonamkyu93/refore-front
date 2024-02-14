@@ -7,6 +7,7 @@ import LoginForm from './component/login/loginForm';
 import MyPage from './component/mypage/MyPage';
 import { ProtectedRoute } from './common/route/ProtectedRoute';
 import Upimg from './component/upimg/Upimg';
+import Sound from './component/sound/Sound';
 function App() {
   return (
   <>
@@ -16,7 +17,7 @@ function App() {
     <Route index element={<Main/>} />
     <Route path="/join" element={<JoinForm/>}/>
     <Route path="/login" element={<LoginForm/>}/>
-    
+    <Route path="/sound" element={<Sound/>}/>
     <Route path='/mypage/*' element={
       <ProtectedRoute>
         <MyPage />

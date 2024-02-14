@@ -31,6 +31,7 @@ const Header = () => {
                         <Link to="/join" className={styles.NavLink}>회원가입</Link>
                         <Link to="/login" className={styles.NavLink}>로그인</Link>
                         <Link to="/upimg" className={styles.NavLink}>이미지</Link>
+                        <Link to="/sound" className={styles.NavLink}>사운드</Link>
                     </>
                 )}
             </nav>
