@@ -2,36 +2,43 @@ import React, { useRef, useEffect, useState } from 'react';
 import styles from './Sound.module.css'; // CSS 모듈 경로 확인 필요
 
 const Sound = () => {
-    const audioCtx = useRef(null);
+    const audioCtx = useRef(new (window.AudioContext || window.webkitAudioContext)());
     const [octave, setOctave] = useState(4); // 현재 옥타브 상태
     const activeOscillators = useRef({});
-    useEffect(() => {
-        audioCtx.current = new (window.AudioContext || window.webkitAudioContext)();
-    }, []);
 
     const playNote = (frequency, note) => {
         if (!audioCtx.current) return;
-
+    
         if (activeOscillators.current[note]) {
             activeOscillators.current[note].stop();
+            delete activeOscillators.current[note];
         }
-
+    
         const oscillator = audioCtx.current.createOscillator();
         oscillator.frequency.setValueAtTime(frequency * Math.pow(2, octave - 4), audioCtx.current.currentTime);
         oscillator.type = 'sine';
         oscillator.connect(audioCtx.current.destination);
+        
         oscillator.start();
-        oscillator.stop(audioCtx.current.currentTime + 1);
-
         activeOscillators.current[note] = oscillator;
+        oscillator.onended = () => {
+            delete activeOscillators.current[note];
+        };
+    };
+    
+    
+
+    const stopNote = (note) => {
+        if (activeOscillators.current[note]) {
+            activeOscillators.current[note].stop();
+            delete activeOscillators.current[note];
+        }
     };
 
-    // 옥타브 변경 함수
     const changeOctave = (amount) => {
         setOctave(octave + amount);
     };
 
-    // 기본 노트 정보
     const notes = [
         { note: 'C', frequency: 261.63, color: 'white' },
         { note: 'C#', frequency: 277.18, color: 'black' },
@@ -48,19 +55,21 @@ const Sound = () => {
     ];
 
     return (
-        <div>
-            <div className={styles.controls}>
-                <button onClick={() => changeOctave(-1)}>옥타브 내리기</button>
-                <button onClick={() => changeOctave(1)}>옥타브 올리기</button>
-            </div>
+        <div className={styles.pianoContainer}>
             <div className={styles.piano}>
                 {notes.map(({ note, frequency, color }) => (
-                    <div key={note} 
+                    <div key={note}
                         className={`${styles.key} ${color === 'black' ? styles.blackKey : styles.whiteKey}`}
-                        onClick={() => playNote(frequency)}>
+                        onMouseDown={() => playNote(frequency, note)}
+                        onMouseUp={() => stopNote(note)}
+                        onMouseLeave={() => stopNote(note)}>
                         {note}
                     </div>
                 ))}
+            </div>
+            <div className={styles.controls}>
+                <button className={styles.button} onClick={() => changeOctave(-1)}>옥타브 내리기</button>
+                <button className={styles.button} onClick={() => changeOctave(1)}>옥타브 올리기</button>
             </div>
         </div>
     );

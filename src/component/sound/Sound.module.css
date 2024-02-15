@@ -1,56 +1,84 @@
 
-  
-  .controls {
-    text-align: center;
-    margin-bottom: 20px;
+  .key {
+    border: 1px solid #000;
+    border-radius: 5px; /* 모서리 둥글게 */
+    margin: 1px; /* 건반 간 간격 */
+    cursor: pointer; /* 클릭 가능한 요소 표시 */
+    user-select: none; /* 텍스트 선택 방지 */
+    transition: background-color 0.3s, transform 0.1s; /* 인터랙션 효과 */
   }
   
   .piano {
     display: flex;
     justify-content: center;
-    position: relative;
-    margin: auto;
-    margin-top: 50px;
-  }
-  
-  .key {
-    position: relative;
-    height: 120px;
-    width: 60px; /* 하얀 건반 너비 */
-    margin: 1px 5px; /* 건반 간 간격 */
-    background-color: #fff;
-    border: 1px solid #000;
-    cursor: pointer;
-  }
-  
-  .blackKey {
-    position: absolute;
-    width: 40px; /* 검은 건반 너비 */
-    height: 80px; /* 검은 건반 높이 */
-    background-color: #000;
-    color: #fff;
-    margin: 0;
-    top: 0;
-    left: 50%; /* 기본 위치를 하얀 건반의 중앙으로 설정 */
-    transform: translateX(-50%); /* X축 기준으로 -50% 이동하여 중앙 정렬 */
-    z-index: 2;
+    align-items: center;
+    margin: 50px auto; /* 화면 중앙 정렬 */
+    position: relative; /* 검은 건반 위치 조정을 위한 상대 위치 설정 */
+    width: fit-content; /* 건반들이 차지하는 만큼의 너비 */
   }
   
   .whiteKey {
-    z-index: 1;
     background-color: #fff;
+    border: 1px solid #000;
+    height: 120px;
+    width: 60px; /* 하얀 건반의 너비 */
+    position: relative; /* 상대 위치 */
+    margin: 0 2px; /* 건반 간격 */
+    z-index: 1;
   }
   
-  .controls button {
-    padding: 10px;
-    margin-right: 5px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+  .blackKey {
+    background-color: #000;
+    color: #fff;
+    height: 75px; /* 검은 건반의 높이, 하얀 건반보다 짧게 */
+    width: 36px; /* 검은 건반의 너비 */
+    position: absolute; /* 절대 위치 */
+    margin: 0;
+    top: 0;
+    z-index: 2;
   }
   
-  .controls button:hover {
-    background-color: #45a049;
+  /* 검은 건반 위치 조정 */
+.blackKey:nth-child(2) { left: 45px; } /* C와 D 사이 */
+.blackKey:nth-child(4) { left: 105px; } /* D와 E 사이 */
+.blackKey:nth-child(7) { left: 240px; } /* F와 G 사이, 조정된 값 */
+.blackKey:nth-child(9) { left: 310px; } /* G와 A 사이, 조정된 값 */
+.blackKey:nth-child(11) { left: 370px; } /* A와 B 사이, 조정된 값 */
+
+  
+  .key:active {
+    transform: scale(0.98); /* 클릭 시 약간 축소 */
+    background-color: #ddd; /* 클릭 시 배경색 변경 */
+  }
+  
+  .blackKey:active {
+    background-color: #444; /* 클릭 시 검은 건반 배경색 변경 */
+  }
+  .controls {
+    display: flex;
+    justify-content: center; /* 버튼들을 가운데 정렬 */
+    align-items: center;
+    margin-top: 20px; /* 건반과의 간격 */
+  }
+  
+  .button {
+    background-color: #4CAF50; /* 버튼 배경 색상 */
+    color: white; /* 버튼 내 텍스트 색상 */
+    padding: 10px 20px; /* 버튼 패딩 */
+    border: none; /* 테두리 제거 */
+    border-radius: 20px; /* 버튼 모서리 둥글게 */
+    cursor: pointer; /* 클릭 가능 표시 */
+    margin: 0 10px; /* 버튼 간 간격 */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* 그림자 효과 */
+    transition: transform 0.3s ease; /* 클릭 효과 */
+  }
+  
+  .button:hover {
+    transform: translateY(-2px); /* 마우스 오버시 버튼이 살짝 올라가는 효과 */
+    background-color: #367C2B; /* 마우스 오버시 배경 색상 변경 */
+  }
+  
+  .button:active {
+    transform: translateY(1px); /* 클릭시 버튼이 살짝 내려가는 효과 */
   }
   
