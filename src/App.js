@@ -8,6 +8,7 @@ import MyPage from './component/mypage/MyPage';
 import { ProtectedRoute } from './common/route/ProtectedRoute';
 import Upimg from './component/upimg/Upimg';
 import Sound from './component/sound/Sound';
+import Ocr from './component/ocr/Ocr';
 function App() {
   return (
   <>
@@ -16,6 +17,7 @@ function App() {
     <Route path="/" element={<Layout/>}>
     <Route index element={<Main/>} />
     <Route path="/join" element={<JoinForm/>}/>
+    <Route path="/ocr" element={<Ocr/>}/>
     <Route path="/login" element={<LoginForm/>}/>
     <Route path="/sound" element={<Sound/>}/>
     <Route path='/mypage/*' element={

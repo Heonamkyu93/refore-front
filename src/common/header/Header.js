@@ -17,7 +17,7 @@ const Header = () => {
     return (
         <header className={styles.Header}>
             <Link to="/" className={styles.Logo}>
-                <img src="/img/react.png" alt="Logo" />
+                <img src="/img/logo.png" alt="Logo" />
             </Link>
             <nav className={styles.Navigation}>
                 {userInfo ? (
@@ -32,6 +32,7 @@ const Header = () => {
                         <Link to="/login" className={styles.NavLink}>로그인</Link>
                         <Link to="/upimg" className={styles.NavLink}>이미지</Link>
                         <Link to="/sound" className={styles.NavLink}>사운드</Link>
+                        <Link to="/ocr" className={styles.NavLink}>OCR</Link>
                     </>
                 )}
             </nav>
