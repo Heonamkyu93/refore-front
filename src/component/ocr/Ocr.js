@@ -1,13 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const Ocr = () => {
     const videoRef = useRef(null);
     const ws = useRef(null);
+    const [canCapture, setCanCapture] = useState(true); // 캡처 가능 상태
 
     useEffect(() => {
         ws.current = new WebSocket('ws://localhost:8000/ocr/ws');
         ws.current.onopen = () => console.log("WebSocket opened");
         ws.current.onclose = () => console.log("WebSocket closed");
+        ws.current.onmessage = (event) => {
+            console.log("서버로부터 응답 받음:", event.data);
+        };
 
         const getVideo = () => {
             navigator.mediaDevices.getUserMedia({ video: true })
@@ -47,9 +51,12 @@ const Ocr = () => {
             recognition.onresult = (event) => {
                 const last = event.results.length - 1;
                 const text = event.results[last][0].transcript.trim();
-                console.log("인식된 텍스트:", text);
-                if (text.includes("캡쳐")) {
+                console.log(`인식된 텍스트: "${text}"`);
+                if (text.toLowerCase().includes("캡처") && canCapture) {
+                    console.log("이미지 캡쳐를 실행합니다.");
                     captureImage();
+                    setCanCapture(false); // 캡처 후 3초 동안 추가 캡처 방지
+                    setTimeout(() => setCanCapture(true), 3000); // 3초 후에 다시 캡처 가능
                 }
             };
 
@@ -57,10 +64,10 @@ const Ocr = () => {
         } else {
             console.error("이 브라우저는 음성 인식을 지원하지 않습니다.");
         }
-    }, []);
+    }, [canCapture]); // canCapture 상태 변경 시 useEffect 재실행
 
     const captureImage = async () => {
-        if (videoRef.current) {
+        if (videoRef.current && canCapture) {
             const canvas = document.createElement('canvas');
             canvas.width = videoRef.current.videoWidth;
             canvas.height = videoRef.current.videoHeight;
