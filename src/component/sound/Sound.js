@@ -6,6 +6,10 @@ const Sound = () => {
     const [octave, setOctave] = useState(4); // 현재 옥타브 상태
     const activeOscillators = useRef({});
 
+
+
+
+
     const playNote = (frequency, note) => {
         if (!audioCtx.current) return;
     

@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styles from './Upimg.module.css'; // CSS 모듈 import
+import styles from './Upimg.module.css';
+import { Bar } from 'react-chartjs-2';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+// 차트 구성 요소를 등록합니다.
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const serverIp = process.env.REACT_APP_FASTAPI_IP;
 const serverPort = process.env.REACT_APP_FASTAPI_PORT;
@@ -8,11 +13,16 @@ const serverPort = process.env.REACT_APP_FASTAPI_PORT;
 const Upimg = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview, setPreview] = useState('');
-    const [fileName, setFileName] = useState(''); // 파일 이름 상태 추가
+    const [fileName, setFileName] = useState('');
+    // 차트 데이터 상태를 null로 초기화합니다.
+    const [chartData, setChartData] = useState(null);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file && file.type.startsWith('image/')) {
+            // 이미지 선택 시, 차트 데이터를 초기화합니다.
+            setChartData(null); // 이미지가 변경될 때 차트를 지웁니다.
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = document.createElement("img");
@@ -20,16 +30,16 @@ const Upimg = () => {
                     const canvas = document.createElement("canvas");
                     canvas.width = img.width;
                     canvas.height = img.height;
-    
+
                     const ctx = canvas.getContext("2d");
                     ctx.drawImage(img, 0, 0);
-    
+
                     canvas.toBlob((blob) => {
                         const newFile = new File([blob], "converted.jpg", { type: "image/jpeg", lastModified: Date.now() });
                         setSelectedFile(newFile);
                         setPreview(URL.createObjectURL(newFile));
-                        setFileName(newFile.name); // 파일 이름 설정
-                    }, 'image/jpeg', 1); // 마지막 인자는 JPG 품질 설정 (0 ~ 1)
+                        setFileName(newFile.name);
+                    }, 'image/jpeg', 1);
                 };
                 img.src = e.target.result;
             };
@@ -38,7 +48,6 @@ const Upimg = () => {
             alert('이미지 파일이 아닙니다.');
         }
     };
-    
 
     const handleUpload = async () => {
         if (selectedFile) {
@@ -51,12 +60,33 @@ const Upimg = () => {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                console.log('서버 응답:', response.data.predictions[1]);
-                alert(response.data.predictions[0]);
+                console.log('서버 응답:', response.data);
+                updateChartData(response.data);
             } catch (error) {
-                console.log(error.response.data)
+                console.error('업로드 실패:', error);
             }
         }
+    };
+
+    const updateChartData = (data) => {
+        const labels = data.predictions.map(item => item[0]);
+        const values = data.predictions.map(item => parseFloat(item[1].replace('%', '')));
+
+        setChartData({
+            labels: labels,
+            datasets: [{
+                label: '분석 결과 (%)',
+                data: values,
+                backgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#cc65fe', '#445ce2', '#e244b1', '#0c420f'
+                ],
+                borderColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#cc65fe', '#445ce2', '#e244b1', '#0c420f'
+                ],
+                borderWidth: 1,
+            }]
+        });
+        
     };
 
     return (
@@ -67,6 +97,28 @@ const Upimg = () => {
                 <button onClick={handleUpload} className={styles.uploadButton}>업로드</button>
             </div>
             {preview && <img src={preview} alt="Preview" className={styles.imagePreview} />}
+            {/* 차트 데이터가 있을 때만 차트를 표시합니다. */}
+            <div className={styles.graphContainer}> {/* 스타일 적용 */}
+            {chartData && (
+                <Bar data={chartData} options={{
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                        },
+                        title: {
+                            display: true,
+                            text: '분석 결과',
+                        },
+                    },
+                }} />
+            )}
+        </div>
         </div>
     );
 }
