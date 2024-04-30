@@ -6,30 +6,23 @@ import JoinForm from './component/join/JoinForm';
 import LoginForm from './component/login/loginForm';
 import MyPage from './component/mypage/MyPage';
 import { ProtectedRoute } from './common/route/ProtectedRoute';
-import Upimg from './component/upimg/Upimg';
-import Sound from './component/sound/Sound';
-import Ocr from './component/ocr/Ocr';
+import HereOrTogo from './component/hereOrTogo/HereOrTogo';
 function App() {
   return (
   <>
     <BrowserRouter>
     <Routes>
     <Route path="/" element={<Layout/>}>
-    <Route index element={<Main/>} />
+    <Route index element={<HereOrTogo/>} />
     <Route path="/join" element={<JoinForm/>}/>
-    <Route path="/ocr" element={<Ocr/>}/>
+    <Route path="/order" element={<HereOrTogo/>}/>
     <Route path="/login" element={<LoginForm/>}/>
-    <Route path="/sound" element={<Sound/>}/>
     <Route path='/mypage/*' element={
       <ProtectedRoute>
         <MyPage />
         </ProtectedRoute>
     }/>
 
-
-<Route path='/upimg' element={
-        <Upimg/>
-    }/>
 
 
 
