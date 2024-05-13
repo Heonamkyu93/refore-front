@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f5f5f5; /* 옅은 하늘색 */
+    background-color: #11420f;
     padding: 0 20px;
     height: 10vh; /* 헤더 높이 */
 }

@@ -1,0 +1,122 @@
+/* MenuInsert.module.css */
+.insertContainer {
+    height: 150vh;
+    padding: 20px;
+    background-color: #11420f;
+}
+
+.formContainer {
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+.formSubmit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3vh;
+}
+.menuinput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+    max-width: 400px; /* 최대 너비 설정 */
+}
+
+label {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+input[type="file"] {
+    margin-top: 5px;
+}
+
+.previewImageContainer {
+    max-width: 15vw; /* 최대 너비 */
+    max-height: 15vh; /* 최대 높이 */
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    margin-top: 10px; /* 사진과 다음 요소 간격 조절 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc; /* 사진 미리보기에 테두리 추가 */
+    border-radius: 5px; /* 사진 미리보기 모서리 둥글게 */
+    background-color: #fff; /* 사진 미리보기 배경색 */
+}
+
+.previewImage {
+    width: 25vh;
+    height: 25vh;
+    max-width: 25vh; /* 최대 너비 */
+    max-height: 25vh; /* 최대 높이 */
+}
+
+.button {
+    background-color: #ffdb00; /* 버튼 배경색 */
+    color: #000; /* 버튼 텍스트 색상 */
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #ffd200; /* 호버 시 배경색 변경 */
+}
+
+
+
+
+
+.submitBtn {
+    background-color: #ffdb00; /* 버튼 배경색 */
+    color:black;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* 버튼과 다음 요소 간격 조절 */
+}
+
+.submitBtn:hover {
+    background-color: red; /* 호버 시 배경색 변경 */
+}
+
+.fileButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px; /* 버튼과 다음 요소 간격 조절 */
+    border-radius: 5px;
+    cursor: pointer;
+}
