@@ -68,7 +68,7 @@ const JoinForm = () => {
         return;
       }
 
-
+      alert(formData.memberPassword);
       axios.post(`http://${serverIp}:${serverPort}/out/join`,formData)
       .then(response => {
           alert(response.data);
@@ -156,11 +156,11 @@ const JoinForm = () => {
               </div>
               <div className={styles.joinInputDiv}>
                 <span>비밀번호</span>
-                <input type='password' maxLength={10} required onChange={changeValue} name='memberPassword' id='memberPassword'></input>
+                <input type='password' maxLength={30} required onChange={changeValue} name='memberPassword' id='memberPassword'></input>
               </div>
               <div className={styles.joinInputDiv}>
                 <span>비밀번호 확인</span>
-                <input type='password' maxLength={10} required onChange={changeValue} name='confirmPassword' id='confirmPassword'></input>
+                <input type='password' maxLength={30} required onChange={changeValue} name='confirmPassword' id='confirmPassword'></input>
               </div>
              
               <div className={styles.joinInputDiv}>
