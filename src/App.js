@@ -8,6 +8,7 @@ import MyPage from './component/mypage/MyPage';
 import { ProtectedRoute } from './common/route/ProtectedRoute';
 import HereOrTogo from './component/hereOrTogo/HereOrTogo';
 import MenuInsert from './component/menuInsert/MenuInsert';
+import MenuList from './component/menuList/MenuList';
 function App() {
   return (
   <>
@@ -16,7 +17,7 @@ function App() {
     <Route path="/" element={<Layout/>}>
     <Route index element={<HereOrTogo/>} />
     <Route path="/join" element={<JoinForm/>}/>
-    
+    <Route path="/list" element={<MenuList/>}/>
     <Route path="/order" element={<HereOrTogo/>}/>
     <Route path="/login" element={<LoginForm/>}/>
     <Route path='/mypage/*' element={
