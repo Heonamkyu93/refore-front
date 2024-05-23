@@ -1,0 +1,78 @@
+.menuContainer {
+    display: flex;
+    padding: 20px;
+  }
+  
+  .sidebarContainer {
+    flex: 0 0 200px;
+    margin-right: 20px;
+    background-color: #ffc107;
+  }
+  
+  .menuGridContainer {
+    flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    max-width: 100%; /* 최대 너비 100%로 제한 */
+  }
+  
+  .menuGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    row-gap: 0.5vw;
+    column-gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .menuItem {
+    background-color: #c91e1e;
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .menuItem h2 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+  
+  .menuItem p {
+    font-size: 0.9em;
+    color: #ffc107;
+  }
+  
+  .menuImage {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0;
+    margin-bottom: 10px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    list-style: none;
+    margin-top: 20px;
+  }
+  
+  .pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .pagination .active a {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+  }
